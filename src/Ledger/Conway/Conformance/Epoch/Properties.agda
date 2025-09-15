@@ -13,6 +13,7 @@ module Ledger.Conway.Conformance.Epoch.Properties
 
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
+open import Ledger.Conway.Conformance.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Ratify.Properties txs
 open import Ledger.Conway.Conformance.Certs govStructure
@@ -35,41 +36,96 @@ module _ {lstate : LState} {ss : Snapshots} where
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
   SNAP-deterministic SNAP SNAP = refl
 
+module _ {e : Epoch} (prs : PoolReapState) where
+  POOLREAP-total : ∃[ prs' ] _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
+  POOLREAP-total = -, POOLREAP
+
+  POOLREAP-complete
+    : ∀ prs' → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs' → proj₁ POOLREAP-total ≡ prs'
+  POOLREAP-complete prs' POOLREAP = refl
+
+  POOLREAP-deterministic
+    : ∀ {prs' prs''}
+    → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
+    → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs''
+    → prs' ≡ prs''
+  POOLREAP-deterministic POOLREAP POOLREAP = refl
 
 module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
-  open RatifyState fut using (removed) renaming (es to esW)
-  open LState ls; open CertState certState; open Acnt acnt
-  es         = record esW { withdrawals = ∅ }
-  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
+
+  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , cs .pState ⟧
+    where
+      open LState
+      open CertState
+      open EPOCH-Updates0
+      cs = ls .certState
+      u0 = EPOCH-updates0 fut ls
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total .proj₂)
+  EPOCH-total =
+    -, EPOCH
+         ( SNAP-total .proj₂
+         , RATIFIES-total' .proj₂
+         , POOLREAP-total prs .proj₂)
+
+  private
+    EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
+    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
+      let
+        EPOCHUpdates es govSt' dState'' gState' _ acnt'' =
+          EPOCH-updates fut ls dState' acnt'
+        certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
+       in
+          record
+            { acnt = acnt''
+            ; ss = ss
+            ; ls = ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
+            ; es = es
+            ; fut = fut'
+            }
 
   EPOCH-deterministic : ∀ eps' eps''
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps''
                       → eps' ≡ eps''
-  EPOCH-deterministic eps' eps'' (EPOCH p₁ p₂) (EPOCH p₁' p₂') =
-    cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut })
-          ss'≡ss''
-          fut'≡fut''
+  EPOCH-deterministic
+      eps'
+      eps''
+      (EPOCH
+        {utxoSt'' = utxoSt''₁}
+        {acnt' = acnt'₁}
+        {dState' = dState'₁}
+        {pState' = pState'₁}
+        (p₁ , p₂ , p₃)
+      )
+      (EPOCH
+        {utxoSt'' = utxoSt''₂}
+        {acnt' = acnt'₂}
+        {dState' = dState'₂}
+        {pState' = pState'₂}
+        (p₁' , p₂' , p₃')
+      ) =
+    cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''
     where
       ss'≡ss'' : EpochState.ss eps' ≡ EpochState.ss eps''
-      ss'≡ss'' = SNAP-deterministic p₂ p₂'
+      ss'≡ss'' = SNAP-deterministic p₁ p₁'
 
       fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
       fut'≡fut'' = RATIFIES-deterministic-≡
                     (cong (λ x → record
-                                   { stakeDistrs = _
+                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ _ _
                                    ; currentEpoch = _
                                    ; dreps = _
                                    ; ccHotKeys = _
                                    ; treasury = _
                                    }) ss'≡ss'')
-                                   refl refl p₁ p₁'
- 
+                                   refl refl p₂ p₂'
+
+      prs'≡prs'' : ⟦ utxoSt''₁ , acnt'₁ , dState'₁ , pState'₁ ⟧ᵖ ≡
+                   ⟦ utxoSt''₂ , acnt'₂ , dState'₂ , pState'₂ ⟧
+      prs'≡prs'' = POOLREAP-deterministic prs p₃ p₃'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
