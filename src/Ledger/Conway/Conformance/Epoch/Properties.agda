@@ -166,4 +166,3 @@ instance
   Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_ ⊥
   Computational-NEWEPOCH .computeProof Γ s sig = success (NEWEPOCH-total _)
   Computational-NEWEPOCH .completeness Γ s sig s' h = cong success (NEWEPOCH-complete _ s' h)
-
