@@ -468,13 +468,17 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
 ### Auxiliary POOL transition system
 
+Note that we are deviating in style from the Shelley specification here. In the
+Shelley specification (Figure 25), the POOL transition system has three rules.
+Here we use a single rule to register and to reregister pools, which is the way
+in which the Haskell implementation does it as well.
+
 ```agda
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-regpool :
-    ∙ kh ∉ dom pools
-      ────────────────────────────────
-      pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
+    ────────────────────────────────
+    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ∣  ❴ kh ❵ ᶜ ⟧
 
   POOL-retirepool :
     ────────────────────────────────
