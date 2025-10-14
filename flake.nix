@@ -122,6 +122,10 @@
                   inherit (texlive)
                     scheme-small
                     dejavu
+                    collection-latexextra
+                    collection-latexrecommended
+                    collection-mathscience
+                    bclogo
                     luatex
                     luatex85
                     dvisvgm

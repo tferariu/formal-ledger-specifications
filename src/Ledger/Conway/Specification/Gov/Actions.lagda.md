@@ -3,16 +3,9 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Gov/Actions.lagda.md
 ---
 
-# Gov Actions {#sec:governance-actions}
+# Governance Actions {#sec:governance-actions}
 
-We introduce the following distinct bodies with specific functions in
-the new governance framework:
-
-1.  a constitutional committee (henceforth called `CC`{.AgdaInductiveConstructor});
-
-2.  a group of delegate representatives (henceforth called `DReps`{.AgdaInductiveConstructor});
-
-3.  the stake pool operators (henceforth called `SPOs`{.AgdaInductiveConstructor}).
+This section defines several concepts and types used to represent governance actions.
 
 <!--
 ```agda
@@ -30,7 +23,18 @@ module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) w
 ```
 -->
 
-## Gov actions
+We introduce the following distinct bodies with specific functions in the new governance framework:
+
+1.  a constitutional committee (henceforth called `CC`{.AgdaInductiveConstructor});
+
+2.  a group of delegate representatives (henceforth called `DReps`{.AgdaInductiveConstructor});
+
+3.  the stake pool operators (henceforth called `SPOs`{.AgdaInductiveConstructor}).
+
+## Governance Action Types and Functions
+
+The `GovRole`{.AgdaDatatype} is used to represent the bodies (voter roles) defined
+above—`CC`{.AgdaInductiveConstructor}, `DRep`{.AgdaInductiveConstructor}, and `SPO`{.AgdaInductiveConstructor}.
 
 ```agda
 data GovRole : Type where
@@ -40,27 +44,91 @@ GovRoleCredential : GovRole → Type
 GovRoleCredential CC   = Credential
 GovRoleCredential DRep = Credential
 GovRoleCredential SPO  = KeyHash
+```
 
+```agda
 record GovVoter : Type where
   constructor ⟦_,_⟧ᵍᵛ
   field
     gvRole       : GovRole
     gvCredential : GovRoleCredential gvRole
+```
 
+`GovActionID`{.AgdaDatatype} is a unique identifier for a governance action,
+consisting of the `TxId`{.AgdaDatatype} of the proposing transaction and an index
+to identify a proposal within a transaction.
+
+```agda
+GovActionID : Type
+GovActionID  = TxId × ℕ
+```
+
+`VDeleg`{.AgdaDatatype} represents voter delegation and specifies the different ways
+to delegate votes.  To delegate voting stake, the stake holder provides one of the
+following:
+
+1. a credential (`vDelegCredential`{.AgdaInductiveConstructor});
+2. an abstention (`vDelegAbstain`{.AgdaInductiveConstructor});
+3. a vote of no confidence (`vDelegNoConfidence`{.AgdaInductiveConstructor}).
+
+```agda
 data VDeleg : Type where
   vDelegCredential   : Credential → VDeleg
   vDelegAbstain      : VDeleg
   vDelegNoConfidence : VDeleg
 
-GovActionID VoteDelegs : Type
-GovActionID  = TxId × ℕ
+VoteDelegs : Type
 VoteDelegs   = Credential ⇀ VDeleg
+```
 
+An `Anchor`{.AgdaRecord} is a url and a document hash.
+
+```agda
 record Anchor : Type where
   field
     url   : String
     hash  : DocHash
+```
 
+!!! info "`DocHash`{.AgdaField}"
+
+    The type `DocHash`{.AgdaField} is abstract but in the implementation it is
+    instantiated with a 32-bit hash type (like, e.g., `ScriptHash`{.AgdaFunction}).
+    We keep it separate because it is used for a different purpose.
+
+
+## The Governance Action Type
+
+A governance actions is one of the seven possible actions shown in the table below.
+
+| **Action** | **Description** |
+|:---|:---|
+| `NoConfidence`{.AgdaInductiveConstructor} | a motion to create a *state of no-confidence* in the current constitutional committee |
+| `UpdateCommittee`{.AgdaInductiveConstructor} | changes to the members of the constitutional committee and/or to its signature threshold and/or terms |
+| `NewConstitution`{.AgdaInductiveConstructor} | a modification to the off-chain Constitution and the proposal policy script |
+| `TriggerHardFork`{.AgdaInductiveConstructor} | triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade |
+| `ChangePParams`{.AgdaInductiveConstructor} | a change to *one or more* updatable protocol parameters, excluding changes to major protocol versions (“hard forks”) |
+| `TreasuryWithdrawal`{.AgdaInductiveConstructor} | movements from the treasury |
+| `Info`{.AgdaInductiveConstructor} | an action that has no effect on-chain, other than an on-chain record |
+
+Governance actions carry the following information:
+
++  `UpdateCommittee`{.AgdaInductiveConstructor}: a map of credentials and terms to
+   add and a set of credentials to remove from the committee;
+
++  `NewConstitution`{.AgdaInductiveConstructor}: a hash of the new constitution
+   document and an optional proposal policy;
+
++  `TriggerHardFork`{.AgdaInductiveConstructor}: the protocol version of the epoch to
+   hard fork into;
+
++  `ChangePParams`{.AgdaInductiveConstructor}: the updates to the parameters;
+
++  `TreasuryWithdrawal`{.AgdaInductiveConstructor}: a map of withdrawals.
+
+We now define the types used to represent the various components of a governance action.
+
+```agda
 data GovActionType : Type where
   NoConfidence        : GovActionType
   UpdateCommittee     : GovActionType
@@ -119,60 +187,6 @@ instance
 ```
 -->
 
-Section [Gov actions](Ledger.Conway.Specification.Gov.Actions.md#gov-actions)
-defines several data types used to represent governance actions. The
-type `DocHash`{.AgdaField} is abstract but in the implementation it will
-be instantiated with a 32-bit hash type (like, e.g., `ScriptHash`{.AgdaFunction}).
-We keep it separate because it is used for a different purpose.
-
-- `GovActionID`{.AgdaDatatype}: a unique identifier for a governance
-  action, consisting of the `TxId`{.AgdaDatatype} of the proposing
-  transaction and an index to identify a proposal within a transaction;
-
-- `GovRole`{.AgdaDatatype}: one of three available voter roles defined above
-  (`CC`{.AgdaInductiveConstructor}, `DRep`{.AgdaInductiveConstructor},
-  `SPO`{.AgdaInductiveConstructor});
-
-- `VDeleg`{.AgdaDatatype}: voter delegation is denoted by one of three ways to
-   delegate votes
-   1. credential (`vDelegCredential`{.AgdaInductiveConstructor}),
-   2. abstention (`vDelegAbstain`{.AgdaInductiveConstructor}),
-   3. no confidence (`vDelegNoConfidence`{.AgdaInductiveConstructor}).
-
-- `Anchor`{.AgdaRecord}: a url and a document hash;
-
-- `GovAction`{.AgdaDatatype}: one of seven possible actions (see
-  Section [Gov Actions](Ledger.Conway.Specification.Gov.Actions.md#fig:types-of-governance-actions)
-  for definitions);
-
-The governance actions carry the following information:
-
-- `UpdateCommittee`{.AgdaInductiveConstructor}: a map of credentials and
-  terms to add and a set of credentials to remove from the committee;
-
-- `NewConstitution`{.AgdaInductiveConstructor}: a hash of the new
-  constitution document and an optional proposal policy;
-
-- `TriggerHardFork`{.AgdaInductiveConstructor}: the protocol version of
-  the epoch to hard fork into;
-
-- `ChangePParams`{.AgdaInductiveConstructor}: the updates to the
-  parameters; and
-
-- `TreasuryWithdrawal`{.AgdaInductiveConstructor}: a map of withdrawals.
-
-## Table: Types of governance actions {#fig:types-of-governance-actions}
-
-| **Action** | **Description** |
-|:---|:---|
-| `NoConfidence`{.AgdaInductiveConstructor} | a motion to create a *state of no-confidence* in the current constitutional committee |
-| `UpdateCommittee`{.AgdaInductiveConstructor} | changes to the members of the constitutional committee and/or to its signature threshold and/or terms |
-| `NewConstitution`{.AgdaInductiveConstructor} | a modification to the off-chain Constitution and the proposal policy script |
-| `TriggerHardFork`{.AgdaInductiveConstructor} | triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade |
-| `ChangePParams`{.AgdaInductiveConstructor} | a change to *one or more* updatable protocol parameters, excluding changes to major protocol versions (“hard forks”) |
-| `TreasuryWithdrawal`{.AgdaInductiveConstructor} | movements from the treasury |
-| `Info`{.AgdaInductiveConstructor} | an action that has no effect on-chain, other than an on-chain record |
-
 ## Hash Protection {#sec:hash-protection}
 
 For some governance actions, in addition to obtaining the necessary
@@ -194,11 +208,7 @@ protection. For `TreasuryWithdrawal`{.AgdaInductiveConstructor} and
 `Info`{.AgdaInductiveConstructor}, enacting them does not change the
 state in non-commutative ways, so they can always be enacted.
 
-Types related to this hash protection scheme are defined in
-Section [NeedsHash and HashProtected types](Ledger.Conway.Specification.Gov.Actions.md#needshash-and-hashprotected-types).
-
-
-### NeedsHash and HashProtected types
+The types we use to represent this hash protection scheme are as follows.
 
 ```agda
 NeedsHash : GovActionType → Type
@@ -226,13 +236,22 @@ instance
 -->
 
 
-## Vote and proposal types
+## Vote Types {#sec:vote-types}
+
+The `Vote`{.AgdaDatatype} type represents the three different voting options:
+`yes`{.AgdaInductiveConstructor}, `no`{.AgdaInductiveConstructor}, and `abstain`{.AgdaInductiveConstructor}.
 
 ```agda
-
 data Vote : Type where
   yes no abstain  : Vote
+```
 
+For a `Vote`{.AgdaDatatype} to be cast, it must be packaged together with further
+information, such as who votes and for which governance action.  This information is
+combined in the `GovVote`{.AgdaRecord} record.  An optional `Anchor`{.AgdaRecord} can
+be provided to give context about why a vote was cast in a certain manner.
+
+```agda
 record GovVote : Type where
   field
     gid         : GovActionID
@@ -240,6 +259,36 @@ record GovVote : Type where
     vote        : Vote
     anchor      : Maybe Anchor
 
+record GovVotes : Type where
+  field
+    gvCC   : Credential ⇀ Vote
+    gvDRep : Credential ⇀ Vote
+    gvSPO  : KeyHash ⇀ Vote
+```
+
+## Governance Proposal Types {#sec:governance-proposal-types}
+
+To propose a governance action, a `GovProposal`{.AgdaRecord} needs to be
+submitted.  Beside the proposed action, it contains the following:
+
++  a pointer to the previous action if required (see [Hash Protection](#sec:hash-protection));
+
++  a pointer to the proposal policy if one is required;
+
++  a deposit, which will be returned to `returnAddr`{.AgdaField};
+
++  an `Anchor`{.AgdaRecord}, providing further information about the
+   proposal.
+
+While the deposit is held, it is added to the deposit pot, similar to stake key
+deposits.  It is also counted towards the voting stake (but not the block production
+stake) of the reward address to which it will be returned, so as not to reduce the
+submitter’s voting power when voting on their own (and competing) actions.  For a
+proposal to be valid, the deposit must be set to the current value of
+`govActionDeposit`{.AgdaField}.  The deposit will be returned when the action is
+removed from the state in any way.
+
+```agda
 record GovProposal : Type where
   field
     action      : GovAction
@@ -248,13 +297,15 @@ record GovProposal : Type where
     deposit     : Coin
     returnAddr  : RwdAddr
     anchor      : Anchor
+```
 
-record GovVotes : Type where
-  field
-    gvCC   : Credential ⇀ Vote
-    gvDRep : Credential ⇀ Vote
-    gvSPO  : KeyHash ⇀ Vote
+## Governance Action State {#sec:governance-action-state}
 
+The `GovActionState`{.AgdaRecord} type represents the state of an individual
+governance action.  It contains the individual votes, its lifetime, and information
+necessary to enact the action and to repay the deposit.
+
+```agda
 record GovActionState : Type where
   field
     votes       : GovVotes
@@ -266,7 +317,6 @@ record GovActionState : Type where
 
 <!--
 ```agda
-
 instance
   HasGovAction-GovProposal : HasGovAction GovProposal
   HasGovAction-GovProposal .GovActionOf = GovProposal.action
@@ -312,11 +362,7 @@ instance
 ```
 -->
 
-
-## Votes and Proposals
-
-
-### Gov helper function
+## Governance Helper Functions {#sec:governance-helper-functions}
 
 ```agda
 isGovVoterDRep : GovVoter → Maybe Credential
@@ -333,37 +379,3 @@ proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ  = dom x
 proposedCC _                                    = ∅
 ```
 
-The data type `Vote`{.AgdaDatatype} represents the different voting options:
-`yes`{.AgdaInductiveConstructor}, `no`{.AgdaInductiveConstructor}, or
-`abstain`{.AgdaInductiveConstructor}.
-
-For a `Vote`{.AgdaDatatype} to be cast, it must be packaged together with further
-information, such as who votes and for which governance action.  This information is
-combined in the `GovVote`{.AgdaRecord} record. An optional `Anchor`{.AgdaRecord} can
-be provided to give context about why a vote was cast in a certain manner.
-
-To propose a governance action, a `GovProposal`{.AgdaRecord} needs to be
-submitted.  Beside the proposed action, it contains:
-
-- a pointer to the previous action if required (see
-  Section [Gov Actions](Ledger.Conway.Specification.Gov.Actions.md#sec:hash-protection)),
-
-- a pointer to the proposal policy if one is required,
-
-- a deposit, which will be returned to `returnAddr`{.AgdaField}, and
-
-- an `Anchor`{.AgdaRecord}, providing further information about the
-  proposal.
-
-While the deposit is held, it is added to the deposit pot, similar to
-stake key deposits. It is also counted towards the voting stake (but not
-the block production stake) of the reward address to which it will be
-returned, so as not to reduce the submitter’s voting power when voting
-on their own (and competing) actions. For a proposal to be valid, the
-deposit must be set to the current value of
-`govActionDeposit`{.AgdaField}. The deposit will be returned when the
-action is removed from the state in any way.
-
-`GovActionState`{.AgdaRecord} is the state of an individual governance
-action. It contains the individual votes, its lifetime, and information
-necessary to enact the action and to repay the deposit.

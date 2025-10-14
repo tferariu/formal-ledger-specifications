@@ -69,6 +69,10 @@ record EpochState : Type where
     fut        : RatifyState
 ```
 
+The `Acnt`{.AgdaRecord} record type has two fields—`treasury`{.AgdaField} and
+`reserves`{.AgdaField}—and the `acnt`{.AgdaField} field in `EpochState`{.AgdaRecord}
+keeps track of the total assets that remain in treasury and reserves.
+
 <!--
 ```agda
 record HasEpochState {a} (A : Type a) : Type a where
@@ -397,6 +401,7 @@ open RwdAddr using (stake)
 opaque
 ```
 -->
+
 ```agda
   calculatePoolDelegatedStake
     : Snapshot
@@ -415,12 +420,11 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the
-delegated stake to SPO{.AgdaFunction}s. This function is used both in the
+The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the delegated
+stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
 `EPOCH`{.AgdaDatatype} rule (via
 `calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
 `NEWEPOCH`{.AgdaDatatype} rule.
-
 
 ```agda
   stakeFromGADeposits
@@ -487,11 +491,10 @@ credential) to the deposit.
                                       ∘ʳ (stakeFromGADeposits govSt utxoSt ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction}
-computes the delegated stake to `SPO`{.AgdaInductiveConstructor}s that
-will be used for counting votes. It complements the result of
-`calculatePoolDelegatedStake`{.AgdaFunction} with the deposits made to
-governance actions.
+The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction} computes the
+delegated stake to `SPOs`{.AgdaInductiveConstructor} that will be used for counting
+votes. It complements the result of `calculatePoolDelegatedStake`{.AgdaFunction} with
+the deposits made to governance actions.
 
 ??? erratum
     [CIP-1694](https://cips.cardano.org/cip/CIP-1694) specifies that
@@ -507,7 +510,7 @@ governance actions.
     While originally _intended_ for `DReps`{.AgdaInductiveConstructor}
     only, the Haskell implementation and the formal specification
     count deposits on governance actions towards the stake of
-    `SPO`{.AgdaInductiveConstructor}s as well.
+    `SPOs`{.AgdaInductiveConstructor} as well.
 
 ```agda
   mkStakeDistrs
@@ -717,7 +720,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
-Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system.
+## The <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#sec:the-newepoch-transition-system}
+
+Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system, which computes
+the new state as of the start of a new epoch.
 
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where

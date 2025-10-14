@@ -38,10 +38,6 @@ private variable
   m n : ℕ
 ```
 -->
- The `Acnt`{.AgdaRecord} record has two fields,
-`treasury`{.AgdaField} and `reserves`{.AgdaField}, so the
-`acnt`{.AgdaBound} field in `NewEpochState`{.AgdaRecord} keeps track of
-the total assets that remain in treasury and reserves.
 
 ## Protocol Parameter Definitions {#sec:protocol-parameter-definitions}
 
@@ -83,15 +79,18 @@ parameters as a group.
 ```agda
 record Acnt : Type where
 ```
+
 <!--
 ```agda
   constructor ⟦_,_⟧ᵃ
 ```
 -->
+
 ```agda
   field
     treasury reserves : Coin
 ```
+
 <!--
 ```agda
 instance
@@ -102,10 +101,12 @@ instance
   HasReserves-Acnt .ReservesOf = Acnt.reserves
 ```
 -->
+
 ```agda
 ProtVer : Type
 ProtVer = ℕ × ℕ
 ```
+
 <!--
 ```agda
 instance
@@ -113,11 +114,13 @@ instance
   Show-ProtVer = Show-×
 ```
 -->
+
 ```agda
 data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
   canFollowMinor : pvCanFollow (m , n) (m , n + 1)
 ```
+
 <!--
 ```agda
 instance
@@ -184,6 +187,7 @@ This section defines new protocol parameters which denote the following concepts
 record PParams : Type where
   field
 ```
+
 *Network group*
 ```agda
         maxBlockSize                  : ℕ
@@ -194,11 +198,13 @@ record PParams : Type where
         maxValSize                    : ℕ
         maxCollateralInputs           : ℕ
 ```
+
 <!--
 ```agda
         pv                            : ProtVer -- retired, keep for now
 ```
 -->
+
 *Economic group*
 ```agda
         a                             : ℕ
@@ -215,11 +221,13 @@ record PParams : Type where
         refScriptCostStride           : ℕ⁺
         refScriptCostMultiplier       : ℚ
 ```
+
 <!--
 ```agda
         minUTxOValue                  : Coin -- retired, keep for now
 ```
 -->
+
 *Technical group*
 ```agda
         Emax                          : Epoch
@@ -227,14 +235,17 @@ record PParams : Type where
         a0                            : ℚ
         collateralPercentage          : ℕ
 ```
+
 <!--
 ```agda
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
 ```
 -->
+
 ```agda
         costmdls                      : CostModel
 ```
+
 *Governance group*
 ```agda
         poolThresholds                : PoolThresholds
@@ -246,6 +257,7 @@ record PParams : Type where
         drepDeposit                   : Coin
         drepActivity                  : Epoch
 ```
+
 *Security group*
 
 `maxBlockSize`{.AgdaField} `maxTxSize`{.AgdaField}
@@ -270,6 +282,7 @@ open HasCCMaxTermLength ⦃...⦄ public
 
 We define the function `paramsWellFormed`{.AgdaFunction} which performs some sanity
 checks on protocol parameters.
+
 ```agda
 positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
@@ -277,11 +290,13 @@ positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
                       ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                       ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 ```
+
 <!--
 ```agda
   where open PParams pp
 ```
 -->
+
 ```agda
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
@@ -497,12 +512,7 @@ module PParamsUpdate where
   instance
     unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
-```
--->
 
-
-<!--
-```agda
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
   pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
@@ -534,24 +544,28 @@ record PParamsDiff : Type₁ where
   field
 ```
 -->
-*Abstract types & functions*
+
+*Abstract types and functions*
 ```agda
     UpdateT       : Type
     applyUpdate   : PParams → UpdateT → PParams
     updateGroups  : UpdateT → ℙ PParamGroup
 ```
+
 <!--
 ```agda
     ⦃ ppWF? ⦄ : ∀ {u} → (∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)) ⁇
 ```
 -->
- *Well-formedness condition*
+
+*Well-formedness condition*
 ```agda
   ppdWellFormed : UpdateT → Type
   ppdWellFormed u =
     updateGroups u ≢ ∅
     × ∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)
 ```
+
 <!--
 ```agda
 record GovParams : Type₁ where
