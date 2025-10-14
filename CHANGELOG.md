@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Allow reregistration of pools in the POOL transition relation
 - Add the BBODY transition relation from Shelley
 - Add the RUPD and TICK transition relations
 - Change two constructor names of `GovActionType` data type
