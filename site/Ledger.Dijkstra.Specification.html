@@ -7304,16 +7304,17 @@
 <pre class="Agda"><a id="9" class="Symbol">{-#</a> <a id="13" class="Keyword">OPTIONS</a> <a id="21" class="Pragma">--safe</a> <a id="28" class="Symbol">#-}</a>
 <a id="32" class="Keyword">module</a> <a id="39" href="Ledger.Dijkstra.Specification.html" class="Module">Ledger.Dijkstra.Specification</a> <a id="69" class="Keyword">where</a>
 
-<a id="76" class="Keyword">import</a> <a id="83" href="Ledger.Dijkstra.Specification.Address.html" class="Module">Ledger.Dijkstra.Specification.Address</a>
-<a id="121" class="Keyword">import</a> <a id="128" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a>
-<a id="164" class="Keyword">import</a> <a id="171" href="Ledger.Dijkstra.Specification.Epoch.html" class="Module">Ledger.Dijkstra.Specification.Epoch</a>
-<a id="207" class="Keyword">import</a> <a id="214" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a>
-<a id="253" class="Keyword">import</a> <a id="260" href="Ledger.Dijkstra.Specification.Gov.Actions.html" class="Module">Ledger.Dijkstra.Specification.Gov.Actions</a>
-<a id="302" class="Keyword">import</a> <a id="309" href="Ledger.Dijkstra.Specification.PParams.html" class="Module">Ledger.Dijkstra.Specification.PParams</a>
-<a id="347" class="Keyword">import</a> <a id="354" href="Ledger.Dijkstra.Specification.Script.html" class="Module">Ledger.Dijkstra.Specification.Script</a>
-<a id="391" class="Keyword">import</a> <a id="398" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a>
-<a id="446" class="Keyword">import</a> <a id="453" href="Ledger.Dijkstra.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Dijkstra.Specification.TokenAlgebra.Base</a>
-<a id="501" class="Keyword">import</a> <a id="508" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
+<a id="76" class="Keyword">import</a> <a id="83" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="117" class="Keyword">renaming</a> <a id="126" class="Symbol">(</a><a id="127" href="Ledger.Core.Specification.Address.html#2609" class="Record">RwdAddr</a> <a id="135" class="Symbol">to</a> <a id="138" class="Record">RewardAddress</a><a id="151" class="Symbol">)</a>
+<a id="153" class="Keyword">import</a> <a id="160" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
+
+<a id="193" class="Keyword">import</a> <a id="200" href="Ledger.Dijkstra.Specification.Certs.html" class="Module">Ledger.Dijkstra.Specification.Certs</a>
+<a id="236" class="Keyword">import</a> <a id="243" href="Ledger.Dijkstra.Specification.Gov.Base.html" class="Module">Ledger.Dijkstra.Specification.Gov.Base</a>
+<a id="282" class="Keyword">import</a> <a id="289" href="Ledger.Dijkstra.Specification.Gov.Actions.html" class="Module">Ledger.Dijkstra.Specification.Gov.Actions</a>
+<a id="331" class="Keyword">import</a> <a id="338" href="Ledger.Dijkstra.Specification.PParams.html" class="Module">Ledger.Dijkstra.Specification.PParams</a>
+<a id="376" class="Keyword">import</a> <a id="383" href="Ledger.Dijkstra.Specification.Script.html" class="Module">Ledger.Dijkstra.Specification.Script</a>
+<a id="420" class="Keyword">import</a> <a id="427" href="Ledger.Dijkstra.Specification.Script.Validation.html" class="Module">Ledger.Dijkstra.Specification.Script.Validation</a>
+<a id="475" class="Keyword">import</a> <a id="482" href="Ledger.Dijkstra.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Dijkstra.Specification.TokenAlgebra.Base</a>
+<a id="530" class="Keyword">import</a> <a id="537" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
 </pre>
 
 <!-- Properties -->
