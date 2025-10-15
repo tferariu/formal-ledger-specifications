@@ -6952,7 +6952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.EssentialAgda.html" class="md-nav__link">
+      <a href="EssentialAgda.html" class="md-nav__link">
         
   
   
@@ -7386,7 +7386,7 @@
 <code class="AgdaDatatype">VDeleg</code>.</p>
 <p><code class="AgdaDatatype">VDeleg</code> is a datatype with three constructors; the one of interest to
 us here is <code>vDelegCredential{.AgdaInductiveConstructor}, which takes a</code>Credential`{.AgdaDatatype}.</p>
-<p>Now suppose we have a collection <code class="AgdaBound">C</code> of credentials--for instance, given
+<p>Now suppose we have a collection <code class="AgdaBound">C</code> of credentials---for instance, given
 <code class="AgdaBound">d</code> : <code class="AgdaDatatype">DState</code>, take <code class="AgdaBound">C</code> to be the domain of
 the <code class="AgdaField">voteDelegs</code> field of <code class="AgdaBound">d</code>. We could then obtain a set of
 <code class="AgdaDatatype">VDelegs</code> by applying <code>vDelegCredential{.AgdaInductiveConstructor} to
@@ -7396,8 +7396,8 @@ from the application of <code class="AgdaInductiveConstructor">vDelegCredential<
 domain of the <code class="AgdaField">voteDelegs</code> of <code class="AgdaBound">d</code> contains the range
 of the <code class="AgdaField">voteDelegs</code> of <code class="AgdaBound">d</code>.</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="voteDelegsVDeleg"></a><a id="1619" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1619" class="Function">voteDelegsVDeleg</a> <a id="1636" class="Symbol">:</a>  <a id="1639" href="Ledger.Conway.Specification.Certs.html#4311" class="Record">DState</a> <a id="1646" class="Symbol">→</a> <a id="1648" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1653" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1619" class="Function">voteDelegsVDeleg</a> <a id="1670" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1670" class="Bound">d</a> <a id="1672" class="Symbol">=</a> <a id="1674" href="Class.IsSet.html#959" class="Function">range</a> <a id="1680" class="Symbol">(</a><a id="1681" href="Ledger.Conway.Specification.Gov.Actions.html#4937" class="Field">VoteDelegsOf</a> <a id="1694" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1670" class="Bound">d</a><a id="1695" class="Symbol">)</a> <a id="1697" href="Interface.HasSubset.html#239" class="Field Operator">⊆</a> <a id="1699" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1704" href="Ledger.Conway.Specification.Gov.Actions.html#2229" class="InductiveConstructor">vDelegCredential</a> <a id="1721" class="Symbol">(</a><a id="1722" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1726" class="Symbol">(</a><a id="1727" href="Ledger.Conway.Specification.Gov.Actions.html#4937" class="Field">VoteDelegsOf</a> <a id="1740" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1670" class="Bound">d</a><a id="1741" class="Symbol">))</a>
+<pre class="Agda"><a id="voteDelegsVDeleg"></a><a id="1620" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1620" class="Function">voteDelegsVDeleg</a> <a id="1637" class="Symbol">:</a>  <a id="1640" href="Ledger.Conway.Specification.Certs.html#4311" class="Record">DState</a> <a id="1647" class="Symbol">→</a> <a id="1649" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1654" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1620" class="Function">voteDelegsVDeleg</a> <a id="1671" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1671" class="Bound">d</a> <a id="1673" class="Symbol">=</a> <a id="1675" href="Class.IsSet.html#959" class="Function">range</a> <a id="1681" class="Symbol">(</a><a id="1682" href="Ledger.Conway.Specification.Gov.Actions.html#4937" class="Field">VoteDelegsOf</a> <a id="1695" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1671" class="Bound">d</a><a id="1696" class="Symbol">)</a> <a id="1698" href="Interface.HasSubset.html#239" class="Field Operator">⊆</a> <a id="1700" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1705" href="Ledger.Conway.Specification.Gov.Actions.html#2229" class="InductiveConstructor">vDelegCredential</a> <a id="1722" class="Symbol">(</a><a id="1723" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1727" class="Symbol">(</a><a id="1728" href="Ledger.Conway.Specification.Gov.Actions.html#4937" class="Field">VoteDelegsOf</a> <a id="1741" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1671" class="Bound">d</a><a id="1742" class="Symbol">))</a>
 </pre>
 <p><em>Proof</em>. (coming soon)</p>
 

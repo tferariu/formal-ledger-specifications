@@ -12,7 +12,7 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
-        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.EssentialAgda.html">
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/EssentialAgda.html">
       
       
         <link rel="prev" href="Definitions.html">
@@ -6963,7 +6963,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="Ledger.EssentialAgda.html" class="md-nav__link md-nav__link--active">
+      <a href="EssentialAgda.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -7432,10 +7432,10 @@ details, the reader is encouraged to consult the official
 <a href="#agda2024">Team24</a>.</p>
 <pre class="Agda hidden-source"><a id="546" class="Symbol">{-#</a> <a id="550" class="Keyword">OPTIONS</a> <a id="558" class="Pragma">--safe</a> <a id="565" class="Symbol">#-}</a>
 
-<a id="570" class="Keyword">module</a> <a id="577" href="Ledger.EssentialAgda.html" class="Module">Ledger.EssentialAgda</a> <a id="598" class="Keyword">where</a>
+<a id="570" class="Keyword">module</a> <a id="577" href="EssentialAgda.html" class="Module">EssentialAgda</a> <a id="591" class="Keyword">where</a>
 
-<a id="605" class="Keyword">open</a> <a id="610" class="Keyword">import</a> <a id="617" href="Prelude.html" class="Module">Prelude</a> <a id="625" class="Keyword">using</a> <a id="631" class="Symbol">(</a><a id="632" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="636" class="Symbol">)</a>
-<a id="638" class="Keyword">open</a> <a id="643" class="Keyword">import</a> <a id="650" href="Data.Nat.html" class="Module">Data.Nat</a>
+<a id="598" class="Keyword">open</a> <a id="603" class="Keyword">import</a> <a id="610" href="Prelude.html" class="Module">Prelude</a> <a id="618" class="Keyword">using</a> <a id="624" class="Symbol">(</a><a id="625" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="629" class="Symbol">)</a>
+<a id="631" class="Keyword">open</a> <a id="636" class="Keyword">import</a> <a id="643" href="Data.Nat.html" class="Module">Data.Nat</a>
 </pre>
 
 <h2 id="record-types">Record Types<a class="headerlink" href="#record-types" title="Permanent link">&para;</a></h2>
@@ -7443,28 +7443,28 @@ details, the reader is encouraged to consult the official
 provides a way to define a type that groups together inhabitants of
 other types.</p>
 <p><strong>Example</strong>.</p>
-<pre class="Agda"><a id="866" class="Keyword">record</a> <a id="Pair"></a><a id="873" href="Ledger.EssentialAgda.html#873" class="Record">Pair</a> <a id="878" class="Symbol">(</a><a id="879" href="Ledger.EssentialAgda.html#879" class="Bound">A</a> <a id="881" href="Ledger.EssentialAgda.html#881" class="Bound">B</a> <a id="883" class="Symbol">:</a> <a id="885" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="889" class="Symbol">)</a> <a id="891" class="Symbol">:</a> <a id="893" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="898" class="Keyword">where</a>
-  <a id="906" class="Keyword">constructor</a> <a id="⦅_,_⦆"></a><a id="918" href="Ledger.EssentialAgda.html#918" class="InductiveConstructor Operator">⦅_,_⦆</a>
-  <a id="926" class="Keyword">field</a>
-    <a id="Pair.fst"></a><a id="936" href="Ledger.EssentialAgda.html#936" class="Field">fst</a> <a id="940" class="Symbol">:</a> <a id="942" href="Ledger.EssentialAgda.html#879" class="Bound">A</a>
-    <a id="Pair.snd"></a><a id="948" href="Ledger.EssentialAgda.html#948" class="Field">snd</a> <a id="952" class="Symbol">:</a> <a id="954" href="Ledger.EssentialAgda.html#881" class="Bound">B</a>
+<pre class="Agda"><a id="859" class="Keyword">record</a> <a id="Pair"></a><a id="866" href="EssentialAgda.html#866" class="Record">Pair</a> <a id="871" class="Symbol">(</a><a id="872" href="EssentialAgda.html#872" class="Bound">A</a> <a id="874" href="EssentialAgda.html#874" class="Bound">B</a> <a id="876" class="Symbol">:</a> <a id="878" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="882" class="Symbol">)</a> <a id="884" class="Symbol">:</a> <a id="886" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="891" class="Keyword">where</a>
+  <a id="899" class="Keyword">constructor</a> <a id="⦅_,_⦆"></a><a id="911" href="EssentialAgda.html#911" class="InductiveConstructor Operator">⦅_,_⦆</a>
+  <a id="919" class="Keyword">field</a>
+    <a id="Pair.fst"></a><a id="929" href="EssentialAgda.html#929" class="Field">fst</a> <a id="933" class="Symbol">:</a> <a id="935" href="EssentialAgda.html#872" class="Bound">A</a>
+    <a id="Pair.snd"></a><a id="941" href="EssentialAgda.html#941" class="Field">snd</a> <a id="945" class="Symbol">:</a> <a id="947" href="EssentialAgda.html#874" class="Bound">B</a>
 </pre>
 <p>We can construct an element of the type
 <code class="AgdaRecord">Pair</code> <code class="AgdaDatatype">ℕ</code> <code class="AgdaDatatype">ℕ</code> (i.e., a pair of natural
 numbers) as follows:</p>
-<pre class="Agda"><a id="p23"></a><a id="1114" href="Ledger.EssentialAgda.html#1114" class="Function">p23</a> <a id="1118" class="Symbol">:</a> <a id="1120" href="Ledger.EssentialAgda.html#873" class="Record">Pair</a> <a id="1125" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1127" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-<a id="1129" href="Ledger.EssentialAgda.html#1114" class="Function">p23</a> <a id="1133" class="Symbol">=</a> <a id="1135" class="Keyword">record</a> <a id="1142" class="Symbol">{</a> <a id="1144" href="Ledger.EssentialAgda.html#936" class="Field">fst</a> <a id="1148" class="Symbol">=</a> <a id="1150" class="Number">2</a><a id="1151" class="Symbol">;</a> <a id="1153" href="Ledger.EssentialAgda.html#948" class="Field">snd</a> <a id="1157" class="Symbol">=</a> <a id="1159" class="Number">3</a> <a id="1161" class="Symbol">}</a>
+<pre class="Agda"><a id="p23"></a><a id="1107" href="EssentialAgda.html#1107" class="Function">p23</a> <a id="1111" class="Symbol">:</a> <a id="1113" href="EssentialAgda.html#866" class="Record">Pair</a> <a id="1118" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1120" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="1122" href="EssentialAgda.html#1107" class="Function">p23</a> <a id="1126" class="Symbol">=</a> <a id="1128" class="Keyword">record</a> <a id="1135" class="Symbol">{</a> <a id="1137" href="EssentialAgda.html#929" class="Field">fst</a> <a id="1141" class="Symbol">=</a> <a id="1143" class="Number">2</a><a id="1144" class="Symbol">;</a> <a id="1146" href="EssentialAgda.html#941" class="Field">snd</a> <a id="1150" class="Symbol">=</a> <a id="1152" class="Number">3</a> <a id="1154" class="Symbol">}</a>
 </pre>
 <p>Since our definition of the <code class="AgdaRecord">Pair</code> type provides an (optional)
 constructor <code class="AgdaInductiveConstructor">⦅_,_⦆</code>, we could have defined
 <code class="AgdaFunction">p23</code> as follows:</p>
-<pre class="Agda"><a id="1356" href="Ledger.EssentialAgda.html#1356" class="Function">_</a> <a id="1358" class="Symbol">:</a> <a id="1360" href="Ledger.EssentialAgda.html#873" class="Record">Pair</a> <a id="1365" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1367" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-<a id="1369" class="Symbol">_</a> <a id="1371" class="Symbol">=</a> <a id="1373" href="Ledger.EssentialAgda.html#918" class="InductiveConstructor Operator">⦅</a> <a id="1375" class="Number">2</a> <a id="1377" href="Ledger.EssentialAgda.html#918" class="InductiveConstructor Operator">,</a> <a id="1379" class="Number">3</a> <a id="1381" href="Ledger.EssentialAgda.html#918" class="InductiveConstructor Operator">⦆</a>
+<pre class="Agda"><a id="1349" href="EssentialAgda.html#1349" class="Function">_</a> <a id="1351" class="Symbol">:</a> <a id="1353" href="EssentialAgda.html#866" class="Record">Pair</a> <a id="1358" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1360" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="1362" class="Symbol">_</a> <a id="1364" class="Symbol">=</a> <a id="1366" href="EssentialAgda.html#911" class="InductiveConstructor Operator">⦅</a> <a id="1368" class="Number">2</a> <a id="1370" href="EssentialAgda.html#911" class="InductiveConstructor Operator">,</a> <a id="1372" class="Number">3</a> <a id="1374" href="EssentialAgda.html#911" class="InductiveConstructor Operator">⦆</a>
 </pre>
 <p>Finally, we can "update" a record by deriving from it a new record whose fields may
 contain new values.  The syntax is best explained by way of example.</p>
-<pre class="Agda"><a id="p24"></a><a id="1550" href="Ledger.EssentialAgda.html#1550" class="Function">p24</a> <a id="1554" class="Symbol">:</a> <a id="1556" href="Ledger.EssentialAgda.html#873" class="Record">Pair</a> <a id="1561" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1563" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-<a id="1565" href="Ledger.EssentialAgda.html#1550" class="Function">p24</a> <a id="1569" class="Symbol">=</a> <a id="1571" class="Keyword">record</a> <a id="1578" href="Ledger.EssentialAgda.html#1114" class="Function">p23</a> <a id="1582" class="Symbol">{</a> <a id="1584" href="Ledger.EssentialAgda.html#948" class="Field">snd</a> <a id="1588" class="Symbol">=</a> <a id="1590" class="Number">4</a> <a id="1592" class="Symbol">}</a>
+<pre class="Agda"><a id="p24"></a><a id="1543" href="EssentialAgda.html#1543" class="Function">p24</a> <a id="1547" class="Symbol">:</a> <a id="1549" href="EssentialAgda.html#866" class="Record">Pair</a> <a id="1554" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1556" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="1558" href="EssentialAgda.html#1543" class="Function">p24</a> <a id="1562" class="Symbol">=</a> <a id="1564" class="Keyword">record</a> <a id="1571" href="EssentialAgda.html#1107" class="Function">p23</a> <a id="1575" class="Symbol">{</a> <a id="1577" href="EssentialAgda.html#941" class="Field">snd</a> <a id="1581" class="Symbol">=</a> <a id="1583" class="Number">4</a> <a id="1585" class="Symbol">}</a>
 </pre>
 <p>This results a new record, <code class="AgdaRecord">p24</code>, which denotes the pair
 <code class="AgdaInductiveConstructor">⦅</code> <code class="AgdaNumber">2</code>
