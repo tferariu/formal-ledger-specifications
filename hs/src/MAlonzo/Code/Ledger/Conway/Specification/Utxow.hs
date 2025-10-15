@@ -289,7 +289,7 @@ d_txFee_1750 v0
 -- _.TxBody.txGovProposals
 d_txGovProposals_1752 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3212 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_956]
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_972]
 d_txGovProposals_1752 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovProposals_3274

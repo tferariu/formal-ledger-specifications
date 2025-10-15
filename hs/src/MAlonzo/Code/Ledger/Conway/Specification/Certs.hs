@@ -986,7 +986,7 @@ d_DCert_1252 a0 = ()
 data T_DCert_1252
   = C_delegate_1254 MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
                     (Maybe
-                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_802)
+                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_804)
                     (Maybe AgdaAny) Integer |
     C_dereg_1256 MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
                  (Maybe Integer) |

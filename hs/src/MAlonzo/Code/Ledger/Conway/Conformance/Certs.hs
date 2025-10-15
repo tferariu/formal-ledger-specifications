@@ -3263,7 +3263,7 @@ d_'46'generalizedField'45'd_24701 v0
 d_'46'generalizedField'45'mv_24703 ::
   T_GeneralizeTel_24717 ->
   Maybe
-    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_802
+    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_804
 d_'46'generalizedField'45'mv_24703 v0
   = case coe v0 of
       C_mkGeneralizeTel_24719 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
@@ -3325,7 +3325,7 @@ data T_GeneralizeTel_24717
                             MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 Integer
                             (Maybe
-                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_802)
+                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_VDeleg_804)
                             [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
                             (Maybe AgdaAny) MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
