@@ -178,7 +178,7 @@ d_Computational'45'POOL_60 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'POOL_60
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1764
+      MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1766
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2494
          (coe
@@ -7058,7 +7058,7 @@ d_Conv'45'DState'45'DState''_160
                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1480
                      (coe v1) (coe v2) (coe v2)
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1480
                            (coe
@@ -7086,7 +7086,7 @@ d_Conv'45'GState'45'GState''_176
                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1496
                      (coe v1) (coe v2)
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1480
                            (coe
@@ -7164,7 +7164,7 @@ d_pool'45'step_190 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1764
+            MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1766
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2494
                (coe

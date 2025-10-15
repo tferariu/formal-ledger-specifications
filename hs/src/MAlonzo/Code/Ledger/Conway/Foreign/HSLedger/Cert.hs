@@ -1433,7 +1433,7 @@ d_Conv'45'CertState'45'CertState''_480
                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_stakeDelegs_1322
                            (coe v1))
                         (coe
-                           MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+                           MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
                            (coe
                               MAlonzo.Code.Axiom.Set.d_th_1480
                               (coe
@@ -1448,7 +1448,7 @@ d_Conv'45'CertState'45'CertState''_480
                            MAlonzo.Code.Ledger.Conway.Specification.Certs.d_ccHotKeys_1348
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+                           MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
                            (coe
                               MAlonzo.Code.Axiom.Set.d_th_1480
                               (coe
