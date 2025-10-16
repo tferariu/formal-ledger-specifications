@@ -2245,6 +2245,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sec:the-newepoch-transition-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      The NEWEPOCH Transition System
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -7537,6 +7546,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sec:the-newepoch-transition-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      The NEWEPOCH Transition System
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -8244,7 +8262,9 @@ and carries out the following tasks:</p>
 <span class="w">      </span>──────────────────────────────────────────────
 <span class="w">      </span>_<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>acnt<span class="w"> </span>,<span class="w"> </span>ss<span class="w"> </span>,<span class="w"> </span>ls<span class="w"> </span>,<span class="w"> </span>es₀<span class="w"> </span>,<span class="w"> </span>fut<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,EPOCH⦈<span class="w"> </span>⟦<span class="w"> </span>acnt&#39;&#39;<span class="w"> </span>,<span class="w"> </span>ss&#39;<span class="w"> </span>,<span class="w"> </span>⟦<span class="w"> </span>utxoSt&#39;&#39;<span class="w"> </span>,<span class="w"> </span>govSt&#39;<span class="w"> </span>,<span class="w"> </span>⟦<span class="w"> </span>dState&#39;&#39;<span class="w"> </span>,<span class="w"> </span>pState&#39;<span class="w"> </span>,<span class="w"> </span>gState&#39;<span class="w"> </span>⟧ᶜˢ<span class="w"> </span>⟧<span class="w"> </span>,<span class="w"> </span>es<span class="w"> </span>,<span class="w"> </span>fut&#39;<span class="w"> </span>⟧
 </code></pre></div>
-<p>Finally, we define the <code class="AgdaDatatype">NEWEPOCH</code> transition system.</p>
+<h2 id="sec:the-newepoch-transition-system">The <span class="AgdaDatatype">NEWEPOCH</span> Transition System<a class="headerlink" href="#sec:the-newepoch-transition-system" title="Permanent link">&para;</a></h2>
+<p>Finally, we define the <code class="AgdaDatatype">NEWEPOCH</code> transition system, which computes
+the new state as of the start of a new epoch.</p>
 <div class="highlight"><pre><span></span><code><span class="kr">data</span><span class="w"> </span>_⊢_⇀⦇_,NEWEPOCH⦈_<span class="w"> </span><span class="ow">:</span><span class="w"> </span>⊤<span class="w"> </span><span class="ow">→</span><span class="w"> </span>NewEpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>NewEpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
 
 <span class="w">  </span><span class="nf">NEWEPOCH-New</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">{</span>bprev<span class="w"> </span>bcur<span class="w"> </span><span class="ow">:</span><span class="w"> </span>BlocksMade<span class="o">}</span><span class="w"> </span><span class="ow">→</span>

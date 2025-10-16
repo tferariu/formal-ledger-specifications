@@ -7632,19 +7632,11 @@
 </code></pre></div>
 -->
 
-<details class="note">
-<summary>Conway specifics</summary>
-<p>This is the specification of the Conway era of the Cardano ledger. As
-with previous specifications, this document is an incremental
-specification, so everything that isn’t defined here refers to the most
-recent definition from an older specification.</p>
-</details>
-<p>This is the work-in-progress specification of the Cardano ledger. The
-Agda source code with which we formalize the ledger specification and
-which generates this pdf document is open source and resides at the
-following</p>
-<p><strong>Repository url</strong>: <a href="https://github.com/IntersectMBO/formal-ledger-specifications">https://github.com/IntersectMBO/formal-ledger-specifications</a></p>
-<p>The current status of each individual era is described in <a href="#fig:eras-progress">Table 1</a>.</p>
+<p>This is the formal specification of the Cardano ledger.  The Agda source code with
+which we formalize the ledger specification and which generates this web site is
+open source and resides at the following</p>
+<p><strong>repository url</strong>: <a href="https://github.com/IntersectMBO/formal-ledger-specifications">https://github.com/IntersectMBO/formal-ledger-specifications</a></p>
+<p>The current status of each individual era is described in the table below.</p>
 <p><a id="fig:eras-progress"></p>
 <p><strong>Table 1</strong>. Specification Progress</p>
 <table>
@@ -7691,27 +7683,38 @@ following</p>
 </table>
 <p></a></p>
 <h2 id="sec:overview">Overview<a class="headerlink" href="#sec:overview" title="Permanent link">&para;</a></h2>
-<p>This document describes, in a precise and executable way, the behavior
-of the Cardano ledger that can be updated in response to a series of
-events. Because of the precise nature of the document, it can be dense
-and difficult to read at times, and it can be helpful to have a
-high-level understanding of what it is trying to describe, which we
-present below. Keep in mind that this section focuses on intuition,
-using terms (set in <em>italics</em>) which may be unfamiliar to some readers,
-but rest assured that later sections of the document will make the
-intuition and italicized terms precise.</p>
+<p>The formal ledger specification Agda source code (and the documentation on this site
+that it generates), describes, in a precise and executable way, the behavior of the
+Cardano ledger as it is updated in response to a series of events.  Because of the
+precise nature of the documententation, it can be dense and difficult to read at
+times, and it can be helpful to have a high-level understanding of what it is trying
+to describe, which we present in this introduction.  Keep in mind that this section
+focuses on intuition, using terms (set in italics) that may be unfamiliar to some
+readers, but rest assured that later sections of the document will make the intuition
+and italicized terms precise.</p>
 <h2 id="a-note-on-agda">A Note on Agda<a class="headerlink" href="#a-note-on-agda" title="Permanent link">&para;</a></h2>
-<p>This specification is written using the  . We have made a considerable
-effort to ensure that this document is readable by people unfamiliar
-with Agda (or other proof assistants, functional programming languages,
-etc.). However, by the nature of working in a formal language we have to
-play by its rules, meaning that some instances of uncommon notation are
-very difficult or impossible to avoid. Some are explained in
-the <a href="Notation.html">Notation</a> and <a href="EssentialAgda.html">Agda Essentials</a> sections,
-but there is no guarantee that those sections are complete. If the
-meaning of an expression is confusing or unclear, please
-<a href="https://github.com/IntersectMBO/formal-ledger-specifications/issues">open an issue</a> in the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger repository</a> with
-the "notation" label.</p>
+<p>This specification is written using the
+<a href="https://wiki.portal.chalmers.se/agda/pmwiki.php">Agda proof assistant and programming language</a>.  We have made a
+considerable effort to ensure that this documentation is readable by people
+unfamiliar with Agda or other proof assistants.  However, by the nature of working in
+a formal language we have to play by its rules, meaning that some instances of
+uncommon notation are very difficult or impossible to avoid.  Some are explained in
+the <a href="Notation.html">Notation</a> and <a href="EssentialAgda.html">Essential Agda</a> sections, but there is no guarantee that
+those sections are complete.  If the meaning of an expression is confusing or
+unclear, please <a href="https://github.com/IntersectMBO/formal-ledger-specifications/issues">open an issue</a> in the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger repository</a>
+with the "notation" label.</p>
+<div class="admonition note">
+<p class="admonition-title">Viewing the Complete Agda Source Code</p>
+<p>Throughout the documentation, source code snippets are presented in
+<a href="https://agda.readthedocs.io/en/latest/literate-programming.html">literate Agda</a>,
+but some of the more technical and less essential bits of code are hidden from
+view in order to improve flow and make the formalization easier to digest.
+However, if you wish to see the complete Agda source code, you can click on
+the "Show more Agda" button at the top of each page, which will reveal the
+complete Agda source code for the module presented on that page.  Alterantively,
+you can always find the source code in its entirety in the
+<a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger repository</a>.</p>
+</div>
 <h2 id="separation-of-concerns">Separation of Concerns<a class="headerlink" href="#separation-of-concerns" title="Permanent link">&para;</a></h2>
 <p>The <em>Cardano Node</em> consists of three pieces,</p>
 <ul>
@@ -7754,29 +7757,28 @@ that determine which events are valid and exactly how the state of the
 ledger should be updated in response to those events. The primary aim of
 this document is to provide a precise description of this system—the
 ledger state, valid events and the rules for processing them.</p>
-<p>We will model this via a number of <em>state transition systems</em> (STS)
-which from now on we refer to as “transition rules” or just “rules.”
-These rules describe the different behaviors that determine how the
-whole system evolves and, taken together, they comprise a full
-description of the ledger protocol. Each transition rule consists of the
-following components:</p>
+<p>We model this via a number of <em>state transition systems</em> (STS), sometimes called
+“transition rules” or just “rules.”  These rules describe the different behaviors
+that determine how the whole system evolves and, taken together, they comprise a full
+description of the ledger protocol.  Each transition rule consists of the following
+components:</p>
 <ul>
 <li>
 <p>an <em>environment</em> consisting of data, read from the ledger state or the
-  outside world, which should be considered constant for the purposes of
-  the rule;</p>
+   outside world, which should be considered constant for the purposes of
+   the rule;</p>
 </li>
 <li>
 <p>an <em>initial state</em>, consisting of the subset of the full ledger state
-  that is relevant to the rule and which the rule can update;</p>
+   that is relevant to the rule and which the rule can update;</p>
 </li>
 <li>
 <p>a <em>signal</em> or <em>event</em>, with associated data, that the rule can receive
-  or observe;</p>
+   or observe;</p>
 </li>
 <li>
 <p>a set of <em>preconditions</em> that must be met in order for the transition
-  to be valid;</p>
+   to be valid;</p>
 </li>
 <li>
 <p>a new state that results from the transition rule.</p>
@@ -7815,7 +7817,7 @@ formally defined.</p>
    LEDGERS transition on the list of transactions in the body.</p>
 </li>
 <li>
-<p>[NEWEPOCH][] computes the new state as of the start of a new epoch; includes the
+<p><a href="Ledger.Conway.Specification.Epoch.html#sec:the-newepoch-transition-system">NEWEPOCH</a> computes the new state as of the start of a new epoch; includes the
    previous EPOCH transition.</p>
 </li>
 <li>
